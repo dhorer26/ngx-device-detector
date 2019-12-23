@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+
+import { Component, VERSION } from '@angular/core';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'firebase-auth-angular-app';
+  propsToShow = ['userAgent', 'os', 'browser', 'device', 'os_version', 'browser_version'];
+  deviceInfo = null;
+  version = VERSION.full;
+  constructor(private deviceService: DeviceDetectorService) {
+    this.deviceInfo = deviceService.getDeviceInfo();
+    console.log(this.deviceInfo);
+  }
+
+  get isMobile() {
+    return this.deviceService.isMobile();
+  }
+
+  get isTablet() {
+    return this.deviceService.isTablet();
+  }
+
+  get isDesktop() {
+    return this.deviceService.isDesktop();
+  }
 }
